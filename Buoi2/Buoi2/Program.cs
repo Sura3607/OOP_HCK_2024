@@ -30,13 +30,12 @@ class Program
             new Student("Le Van Sang", 3.4f)
         };
         
-        Student st = new Student();
-        st.ShowListStudent(students);
+        Student.ShowListStudent(students);
 
         Console.WriteLine("-------------------------------------------------------");
 
-        students = st.SortStudents(students);
-        st.ShowListStudent(students);
+        students = Student.SortStudents(students);
+        Student.ShowListStudent(students);
         
     }
     static void Bai2()

@@ -29,7 +29,7 @@ namespace OOP_HCK_2024
         {
             return $"Name : {name} \t Gpa : {gpa}";
         }
-        public void ShowListStudent(Student[] students)
+        public static void ShowListStudent(Student[] students)
         {
             Console.WriteLine($"STT \t | \t Name \t\t\t | \t  Gpa |");
             for(int i =0 ; i<students.Length; i++)
@@ -37,7 +37,7 @@ namespace OOP_HCK_2024
                 Console.WriteLine($"{i +1} \t | \t {students[i].Name,-20} \t | \t {students[i].Gpa,4} |");
             }
         }
-        public Student[] SortStudents(Student[] students)
+        public static Student[] SortStudents(Student[] students)
         {
             for (int i = 1; i < students.Length; ++i)
             {
