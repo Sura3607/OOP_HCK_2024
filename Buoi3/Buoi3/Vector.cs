@@ -8,6 +8,10 @@ namespace Buoi3
 {
     public abstract class Vector
     {
+        private float x;
+        private float y;
+        private float z;
+        
         public abstract Vector Sum(Vector vt);
         public abstract string GetInfo();
         public abstract void ShowInfo();
