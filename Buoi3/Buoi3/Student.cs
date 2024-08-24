@@ -12,7 +12,7 @@ namespace Buoi3
         private float gpa;
         public string Id { get => id; set => id = value; }
         public float Gpa { get => gpa; set => gpa = value; }
-        public Student(string id, float gpa, string name, string place_of_birth, DateTime birthday) : base(name, place_of_birth, birthday)
+        public Student(string id = "00", float gpa = 0, string name = "None", string place_of_birth = "UnKnow", DateTime birthday = default) : base(name, place_of_birth, birthday)
         {
             this.id = id;
             this.gpa = gpa;
@@ -24,13 +24,16 @@ namespace Buoi3
         }
         public string GetInfo()
         {
-            return $"{id,-5} {Name,-10} {gpa,6} {Place_of_birth,-20} {Birthday}";
+            return $"{id,-5}|{Name,-20}|{gpa,6}|{Place_of_birth,-20}|{Birthday.ToString("dd/MM/yyyy")}";
         }
         public static void ShowList(List<Student> students)
         {
-            foreach (Student student in students)
+            Console.WriteLine($"{"STT",-5}|{"Id",-5}|{"Name",-20}|{"Gpa",6}|{"Place_of_birth",-20}|{"Birthday"}");
+            Console.WriteLine("------------------------------------------------------------------------");
+            for (int i = 0; i<students.Count; i++)
             {
-                Console.WriteLine(student.GetInfo());
+                Console.Write($"{i + 1,-5}|");
+                Console.WriteLine(students[i].GetInfo());
             }
         }
         public static List<Student> SortStudents(List<Student> students)
@@ -59,6 +62,7 @@ namespace Buoi3
                 students[start++] = students[end];
                 students[end--] = temp;
             }
+            return students;
         }
     }
 }
