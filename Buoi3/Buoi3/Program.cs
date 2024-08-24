@@ -82,7 +82,7 @@ namespace Buoi3
 
             //Sum list
             Console.WriteLine("\n------------------------------\n");
-            Console.WriteLine("CONG CAC PHN TU TRONG LIST:");
+            Console.WriteLine("CONG CAC PHAN TU TRONG LIST:");
             for (int i = 0; i < vectors.Count; i++)
             {
                 for (int j = i+1; j < vectors.Count; j++)
