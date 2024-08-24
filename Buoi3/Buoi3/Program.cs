@@ -104,7 +104,7 @@ namespace Buoi3
 
             //check orth
             Console.WriteLine("\n------------------------------\n");
-            Console.WriteLine("KIEM TRA CAC Vector TRUC GIO VOI NHAU:");
+            Console.WriteLine("KIEM TRA CAC Vector TRUC GIAO VOI NHAU:");
             for (int i = 0; i < vectors.Count; i++)
             {
                 for (int j = i + 1; j < vectors.Count; j++)
