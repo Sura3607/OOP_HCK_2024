@@ -114,7 +114,7 @@ namespace Buoi3
                     if (!vectors[i].Orth(vectors[j]))
                         continue;
 
-                    Console.Write($"Vector{i + 1}{vectors[i].GetInfo()} va Vector{j + 1}{vectors[i].GetInfo()} ");
+                    Console.Write($"Vector {i + 1}:{vectors[i].GetInfo()} va Vector {j + 1}:{vectors[j].GetInfo()} ");
 
                     if (Vector2D.IsVector2D(vectors[i]))
                         Console.Write("la cap Vector2D truc giao");

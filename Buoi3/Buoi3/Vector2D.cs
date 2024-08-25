@@ -10,9 +10,8 @@ namespace Buoi3
     {
         private float x;
         private float y;
-
-        public float X { get => x; set => x = value; }
-        public float Y { get => y; set => y = value; }
+        public float X { get => x; private set => x = value; }
+        public float Y { get => y; private set => y = value; }
         public Vector2D(float x = 0f, float y = 0f)
         {
             X = x;
@@ -20,12 +19,12 @@ namespace Buoi3
         }
         public Vector2D(Vector2D vt2)
         {
-            X = vt2.x;
-            Y = vt2.y;
+            X = vt2.X;
+            Y = vt2.Y;
         }
         public override string GetInfo()
         {
-            return $"({x,-3}, {y})";
+            return $"({X,-3}, {Y})";
         }
         public override void ShowInfo()
         {
@@ -42,8 +41,19 @@ namespace Buoi3
         }        
         public override bool Orth(Vector vt)
         {
+            return Mul(vt) == 0;
+        }
+
+        public override Vector Sub(Vector vt)
+        {
             Vector2D vt2 = vt as Vector2D;
-            return X*vt2.X + Y*vt2.Y == 0f;
+            return new Vector2D((float)Math.Round(X - vt2.X, 1), (float)Math.Round(Y - vt2.Y, 1));
+        }
+
+        public override float Mul(Vector vt)
+        {
+            Vector2D vt2 = vt as Vector2D;
+            return X * vt2.X + Y * vt2.Y;
         }
     }
 }

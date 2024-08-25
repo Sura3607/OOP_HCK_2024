@@ -11,10 +11,9 @@ namespace Buoi3
         private float x;
         private float y;
         private float z;
-
-        public float X { get => x; set => x = value; }
-        public float Y { get => y; set => y = value; }
-        public float Z { get => z; set => z = value; }
+        public float X { get => x; private set=>x = value; }
+        public float Y { get => y; private set=> y = value; }
+        public float Z { get =>z; private set=> z = value; }
 
         public Vector3D(float x = 0f, float y = 0f, float z = 0f)
         {
@@ -24,14 +23,14 @@ namespace Buoi3
         }
         public Vector3D(Vector3D vt3)
         {
-            X = vt3.x;
-            Y = vt3.y;
-            Z = vt3.z;
+            X = vt3.X;
+            Y = vt3.Y;
+            Z = vt3.Z;
         }
 
         public override string GetInfo()
         {
-            return $"({x,-3}, {y,-3}, {z})";
+            return $"({X,-3}, {Y,-3}, {Z})";
         }
         public override void ShowInfo()
         {
@@ -49,8 +48,19 @@ namespace Buoi3
 
         public override bool Orth(Vector vt)
         {
+            return Mul(vt) == 0;
+        }
+
+        public override Vector Sub(Vector vt)
+        {
             Vector3D vt3 = vt as Vector3D;
-            return X * vt3.X + Y * vt3.Y + Z * vt3.Z == 0f;
+            return new Vector3D((float)Math.Round(X - vt3.X, 1), (float)Math.Round(Y - vt3.Y, 1), (float)Math.Round(Z - vt3.Z, 1));
+        }
+
+        public override float Mul(Vector vt)
+        {
+            Vector3D vt3 = vt as Vector3D;
+            return X*vt3.X + Y*vt3.Y + Z*vt3.Z;
         }
     }
 }
