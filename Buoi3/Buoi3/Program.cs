@@ -86,7 +86,7 @@ namespace Buoi3
             for (int i = 0; i < vectors.Count; i++)
             {
                 for (int j = i+1; j < vectors.Count; j++)
-                {
+                {                    
                     if (vectors[i].GetType() == vectors[j].GetType())
                     {
                         Console.Write($"Vector {i + 1,-3} + Vector {j + 1,-3} = ");
@@ -111,7 +111,7 @@ namespace Buoi3
                 {
                     if (!(vectors[i].GetType() == vectors[j].GetType()))
                         continue;
-                    if (!vectors[i].Orth(vectors[j]))
+                    if (!vectors[i].Orth(vectors[j])) 
                         continue;
 
                     Console.Write($"Vector {i + 1}:{vectors[i].GetInfo()} va Vector {j + 1}:{vectors[j].GetInfo()} ");

@@ -43,6 +43,7 @@ namespace Buoi3
         public override Vector Sum(Vector vt)
         {
             Vector3D vt3 = vt as Vector3D;
+            //Vector3D vt3 = (Vector3D)vt;
             return new Vector3D((float)Math.Round(X + vt3.X, 1), (float)Math.Round(Y + vt3.Y, 1), (float)Math.Round(Z + vt3.Z, 1));
         }
 
