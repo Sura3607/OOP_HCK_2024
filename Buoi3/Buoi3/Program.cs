@@ -11,8 +11,8 @@ namespace Buoi3
     {
         static void Main(string[] args)
         {
-            //Bai1();
-            Bai2();
+            Bai1();
+            //Bai2();
 
             Console.ReadKey();
         }
