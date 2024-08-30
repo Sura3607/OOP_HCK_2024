@@ -9,6 +9,6 @@ namespace Buoi4
     public interface IPoint
     {
         float cal_dist(IPoint point);
-        string ToString();
+        string Point_Info();
     }
 }

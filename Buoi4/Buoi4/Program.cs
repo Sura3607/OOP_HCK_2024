@@ -80,14 +80,14 @@ namespace Buoi4
             Console.WriteLine("Point2D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Point2D))
-                    Console.WriteLine($"Point {i + 1} {list[i].ToString()}");
+                    Console.WriteLine($"Point {i + 1} {list[i].Point_Info()}");
 
             Console.WriteLine();
 
             Console.WriteLine("Point3D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Point3D))
-                    Console.WriteLine($"Point {i + 1} {list[i].ToString()}");
+                    Console.WriteLine($"Point {i + 1} {list[i].Point_Info()}");
             Console.WriteLine("\n-----------------------------------------------\n");
         }
         public static void ShowList(List<ICricle> list)
@@ -96,14 +96,14 @@ namespace Buoi4
             Console.WriteLine("Cricle2D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Cricle2D))
-                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().ToString()} and r = {list[i].GetR()}");
+                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().Point_Info()} and r = {list[i].GetR()}");
 
             Console.WriteLine();
 
             Console.WriteLine("Cricle3D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Cricle3D))
-                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().ToString()} and r = {list[i].GetR()}");
+                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().Point_Info()} and r = {list[i].GetR()}");
             Console.WriteLine("\n-----------------------------------------------\n");
         }
         //showlist khoang cach

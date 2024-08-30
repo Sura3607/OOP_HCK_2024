@@ -23,7 +23,7 @@ namespace Buoi4
         {
             return new Point3D(this.x, this.y, this.z);
         }
-        public string ToString()
+        public string Point_Info()
         {
             return $"({this.x,-4}, {this.y,-4}, {this.z,3})";
         }
