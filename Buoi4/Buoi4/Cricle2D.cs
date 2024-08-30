@@ -10,6 +10,7 @@ namespace Buoi4
     {
         private Point2D point;
         private float r;
+        private const float pi = 3.1415926535897931f;
 
         public Point2D Point { get => point;private set => point = value; }
         public float R { get => r;private set => r = value; }
@@ -22,10 +23,17 @@ namespace Buoi4
         {
             return new Cricle2D(this.point, this.r);
         }
-
+        public string GetPoint()
+        {
+            return $"({this.Point.X,-4},{this.Point.Y,4})";
+        }
+        public float GetR()
+        {
+            return this.r;
+        }
         public float cal_area()
         {
-            throw new NotImplementedException();
+            return (float)Math.Round(pi * this.r * this.r, 2);
         }
     }
 }

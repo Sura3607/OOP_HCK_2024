@@ -21,11 +21,17 @@ namespace Buoi4
         {
             return new Point2D(this.x, this.y);
         }
+        public string GetPoint()
+        {
+            return $"({this.x,-4},{this.y,4})";
+        }
         public float cal_dist(IPoint point)
         {
             Point2D point2D = point as Point2D;
-            return (float)Math.Sqrt((point2D.X - X) * (point2D.X - X) + (point2D.Y - Y) * (point2D.Y - Y));
+            return (float)Math.Round(Math.Sqrt((point2D.X - X) * (point2D.X - X) 
+                                             + (point2D.Y - Y) * (point2D.Y - Y)),2);
         }
+        
         public static Point2D operator +(Point2D a, Point2D b) => new Point2D(a.X + b.X, a.Y + b.Y);
         public static Point2D operator -(Point2D a, Point2D b) => new Point2D(a.X - b.X, a.Y - b.Y);
     }

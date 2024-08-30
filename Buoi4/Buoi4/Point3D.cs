@@ -23,9 +23,16 @@ namespace Buoi4
         {
             return new Point3D(this.x, this.y, this.z);
         }
-        public float cal_dist()
+        public string GetPoint()
         {
-            throw new NotImplementedException();
+            return $"({this.x,-4}, {this.y,-4}, {this.z,3})";
+        }
+        public float cal_dist(IPoint point)
+        {
+            Point3D point2D = point as Point3D;
+            return (float)Math.Round(Math.Sqrt((point2D.X - X) * (point2D.X - X) 
+                                             + (point2D.Y - Y) * (point2D.Y - Y) 
+                                             + (point2D.Z - Z) * (point2D.Z - Z)),2);
         }
         public static Point3D operator +(Point3D a, Point3D b) => new Point3D(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
         public static Point3D operator -(Point3D a, Point3D b) => new Point3D(a.X - b.X, a.Y - b.Y, a.Z - b.Z);

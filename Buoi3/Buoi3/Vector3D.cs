@@ -49,19 +49,14 @@ namespace Buoi3
 
         public override bool Orth(Vector vt)
         {
-            return Mul(vt) == 0;
+            Vector3D vt3 = vt as Vector3D;
+            return X * vt3.X + Y * vt3.Y + Z * vt3.Z == 0;
         }
 
         public override Vector Sub(Vector vt)
         {
             Vector3D vt3 = vt as Vector3D;
             return new Vector3D((float)Math.Round(X - vt3.X, 1), (float)Math.Round(Y - vt3.Y, 1), (float)Math.Round(Z - vt3.Z, 1));
-        }
-
-        public override float Mul(Vector vt)
-        {
-            Vector3D vt3 = vt as Vector3D;
-            return X*vt3.X + Y*vt3.Y + Z*vt3.Z;
         }
     }
 }
