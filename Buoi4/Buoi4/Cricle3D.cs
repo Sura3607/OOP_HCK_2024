@@ -23,9 +23,9 @@ namespace Buoi4
         {
             return new Cricle3D(this.point, this.r);
         }
-        public string GetPoint()
+        public IPoint GetPoint()
         {
-            return $"({this.Point.X, -4}, {this.Point.Y, -4}, {this.Point.Z,3})";
+            return this.point;
         }
         public float GetR()
         {

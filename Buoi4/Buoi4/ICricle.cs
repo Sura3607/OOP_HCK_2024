@@ -9,7 +9,7 @@ namespace Buoi4
     public interface ICricle
     {
         float cal_area();
-        string GetPoint();
+        IPoint GetPoint();
         float GetR();
     }
 }

@@ -21,7 +21,7 @@ namespace Buoi4
         {
             return new Point2D(this.x, this.y);
         }
-        public string GetPoint()
+        public string ToString()
         {
             return $"({this.x,-4},{this.y,4})";
         }

@@ -14,8 +14,12 @@ namespace Buoi4
             ShowList(points);
             Show_dist(points);
 
-            List<ICricle> cricles = CreateCricles_FromPoints(points);
+            List<ICricle> cricles = CreateCricles(points);
             ShowList(cricles);
+            Show_area(cricles);
+
+            Console.WriteLine("\n----------------------------------------\n");
+            ShowALL_RelativePosition(points, cricles);
 
             Console.ReadKey();
         }
@@ -55,7 +59,7 @@ namespace Buoi4
             }
             return list;
         }
-        public static List<ICricle> CreateCricles_FromPoints(List<IPoint> listPoint)
+        public static List<ICricle> CreateCricles(List<IPoint> listPoint)
         {
             var list = new List<ICricle>();
             Random rand = new Random();
@@ -76,14 +80,14 @@ namespace Buoi4
             Console.WriteLine("Point2D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Point2D))
-                    Console.WriteLine($"Point {i + 1} {list[i].GetPoint()}");
+                    Console.WriteLine($"Point {i + 1} {list[i].ToString()}");
 
             Console.WriteLine();
 
             Console.WriteLine("Point3D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Point3D))
-                    Console.WriteLine($"Point {i + 1} {list[i].GetPoint()}");
+                    Console.WriteLine($"Point {i + 1} {list[i].ToString()}");
             Console.WriteLine("\n-----------------------------------------------\n");
         }
         public static void ShowList(List<ICricle> list)
@@ -92,22 +96,65 @@ namespace Buoi4
             Console.WriteLine("Cricle2D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Cricle2D))
-                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint()} and r = {list[i].GetR()}");
+                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().ToString()} and r = {list[i].GetR()}");
 
             Console.WriteLine();
 
             Console.WriteLine("Cricle3D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Cricle3D))
-                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint()} and r = {list[i].GetR()}");
+                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().ToString()} and r = {list[i].GetR()}");
             Console.WriteLine("\n-----------------------------------------------\n");
         }
+        //showlist khoang cach
         public static void Show_dist(List<IPoint> points)
         {
             for (int i = 0;i < points.Count; i++)           
                 for(int j = i + 1; j < points.Count; j++)                
                     if (points[i].GetType() == points[j].GetType())
                         Console.WriteLine($"Khoan cach giua Point {i + 1} va Point {j + 1} la: {points[i].cal_dist(points[j])}");                            
+        }
+        //showlist dien tich
+        public static void Show_area(List<ICricle> cricles)
+        {
+            for(int i = 0; i< cricles.Count; i++)
+            {
+                if (cricles[i].GetType() == typeof(Cricle2D))               
+                    Console.WriteLine($"Hinh tron Cricle {i + 1} co dien tich la: {cricles[i].cal_area()}");               
+                else
+                    Console.WriteLine($"Hinh cau Cricle {i + 1} co dien tich la: {cricles[i].cal_area()}");
+            }
+        }
+
+        //tinh khoang cach tuong doi voi duong tron/hinh cau
+        public static int GetRelativePosition(IPoint point, ICricle cricle)
+        {
+            if (point.cal_dist(cricle.GetPoint()) > cricle.GetR()) return 1;
+            else if (point.cal_dist(cricle.GetPoint()) < cricle.GetR()) return -1; 
+            else return 0;
+        }
+        public static void ShowALL_RelativePosition(List<IPoint> points, List<ICricle> cricles)
+        {
+            for(int i = 0;i < cricles.Count;i++)
+            {
+                if (cricles[i].GetType() == typeof(Cricle2D))
+                    Console.WriteLine($"Hinh tron Cricle {i + 1}: r = {cricles[i].GetR()}");
+                else
+                    Console.WriteLine($"Hinh cau Cricle {i + 1}: r = {cricles[i].GetR()}");
+                for (int j = 0; j < points.Count; j++)
+                {
+                    if (cricles[i].GetPoint().GetType() != points[j].GetType() || i == j)
+                        continue;
+                    int k = GetRelativePosition(points[j], cricles[i]);
+                    if (k > 0)
+                        Console.WriteLine($"\tPoint {j + 1} nam ngoai (khoang cach voi tam la: {points[j].cal_dist(cricles[i].GetPoint())})");
+                    else if (k < 0)
+                        Console.WriteLine($"\tPoint {j + 1} nam trong (khoang cach voi tam la: {points[j].cal_dist(cricles[i].GetPoint())})");
+                    else
+                        Console.WriteLine($"\tPoint {j + 1} nam tren (khoang cach voi tam la: {points[j].cal_dist(cricles[i].GetPoint())})");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
