@@ -74,6 +74,7 @@ namespace Buoi4
             }
             return list;
         }
+        //Show list point or cricle
         public static void ShowList(List<IPoint> list)
         {
             Console.WriteLine("\n-----------------------------------------------\n");
@@ -145,6 +146,7 @@ namespace Buoi4
                 {
                     if (cricles[i].GetPoint().GetType() != points[j].GetType() || i == j)
                         continue;
+
                     int k = GetRelativePosition(points[j], cricles[i]);
                     if (k > 0)
                         Console.WriteLine($"\tPoint {j + 1} nam ngoai (khoang cach voi tam la: {points[j].cal_dist(cricles[i].GetPoint())})");
