@@ -10,7 +10,7 @@ namespace Buoi4
     {
         static void Main(string[] args)
         {
-            List<IPoint> points = CreatePoints();
+            List<IPoint> points = CreatePoints(10);
             ShowList(points);
             Show_dist(points);
 
@@ -23,9 +23,10 @@ namespace Buoi4
 
             Console.ReadKey();
         }
+        //tao list point
         public static List<IPoint> CreatePoints(int n = 5)
         {
-            var list = new List<IPoint>();
+            List<IPoint> list = new List<IPoint>();
             Random rand = new Random();
             for (int i = 0; i < n; i++)
             {
@@ -45,7 +46,7 @@ namespace Buoi4
         //2 cách tạo list cricle
         public static List<ICricle> CreateCricles(int n = 5)
         {
-            var list = new List<ICricle>();
+            List<ICricle> list = new List<ICricle>();
             List<IPoint> listPoint = CreatePoints(n);
             Random rand = new Random();
             for(int i = 0;i < n; i++)
@@ -61,7 +62,7 @@ namespace Buoi4
         }
         public static List<ICricle> CreateCricles(List<IPoint> listPoint)
         {
-            var list = new List<ICricle>();
+            List<ICricle> list = new List<ICricle>();
             Random rand = new Random();
             for (int i = 0; i < listPoint.Count; i++)
             {
@@ -97,14 +98,14 @@ namespace Buoi4
             Console.WriteLine("Cricle2D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Cricle2D))
-                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().Point_Info()} and r = {list[i].GetR()}");
+                    Console.WriteLine($"Cricle {i + 1} : Tam Point {list[i].GetPoint().Point_Info()} and r = {list[i].GetR()}");
 
             Console.WriteLine();
 
             Console.WriteLine("Cricle3D:");
             for (int i = 0; i < list.Count; i++)
                 if (list[i].GetType() == typeof(Cricle3D))
-                    Console.WriteLine($"Cricle {i + 1} : Point {list[i].GetPoint().Point_Info()} and r = {list[i].GetR()}");
+                    Console.WriteLine($"Cricle {i + 1} : Tam Point {list[i].GetPoint().Point_Info()} and r = {list[i].GetR()}");
             Console.WriteLine("\n-----------------------------------------------\n");
         }
         //showlist khoang cach
@@ -113,7 +114,7 @@ namespace Buoi4
             for (int i = 0;i < points.Count; i++)           
                 for(int j = i + 1; j < points.Count; j++)                
                     if (points[i].GetType() == points[j].GetType())
-                        Console.WriteLine($"Khoan cach giua Point {i + 1} va Point {j + 1} la: {points[i].cal_dist(points[j])}");                            
+                        Console.WriteLine($"Khoang cach giua Point {i + 1} va Point {j + 1} la: {points[i].cal_dist(points[j])}");                            
         }
         //showlist dien tich
         public static void Show_area(List<ICricle> cricles)
