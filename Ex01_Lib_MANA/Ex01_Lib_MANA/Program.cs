@@ -12,14 +12,19 @@ public class Program
     private static Library library;
     public static void PrintBooks(List<Book> bks)
     {
-        int i = 1;
         foreach (Book book in bks)
-        {
-            Console.WriteLine($"Book {i} => ");
+        {            
             Console.WriteLine(book);
-            Console.WriteLine("--------------------");
-            i++;
+            Console.WriteLine("--------------------");         
         }    
+    }
+    public static void PrintUser(List<User> users)
+    {
+        foreach (User us in users)
+        {
+            Console.WriteLine(us);
+            Console.WriteLine("--------------------");
+        }
     }
     public static void AddBooks()
     {
@@ -38,6 +43,9 @@ public class Program
         library.addBook(new Book("B05", "Naruto",
         "Kishimoto Masashi", new DateTime(1999, 9, 1),
         "NXB Phu Nu", 50, 250000, 10));
+        library.addBook(new Book("B01", "Lap trinh HDT",
+        "Nguyen Van At", new DateTime(2023, 12, 20),
+        "NXB DHQG HN", 240, 210000, 23));
     }
     public static void Main(string[] args)
     {
@@ -152,11 +160,17 @@ public class Program
         Console.WriteLine("----------------------------------------");
         PrintBooks(books);
         Console.WriteLine("----------------------------------------");
-        Console.Write("Nhap so thu tu sach muon muon: ");
-        byte stt = byte.Parse(Console.ReadLine());
+        Console.Write("Nhap id sach muon muon: ");
+        string id = Console.ReadLine();
 
-        if (user.Borrow(stt - 1, books, library))
+        if (user.Borrow(id, books, library))
+        {
             Console.WriteLine("Muon sach thanh cong");
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("Danh sach nhunng tai khoan dang muon sach");
+            PrintUser(library.GetUserBarrowed());
+        }
+
         else
             Console.WriteLine("Muon sach khong thanh cong");
     }
@@ -167,10 +181,10 @@ public class Program
         Console.WriteLine("----------------------------------------");
         PrintBooks(books);
         Console.WriteLine("----------------------------------------");
-        Console.Write("Nhap so thu tu sach muon tra: ");
-        byte stt = byte.Parse(Console.ReadLine());
+        Console.Write("Nhap id sach muon tra: ");
+        string id = Console.ReadLine();
 
-        if (user.Borrow(stt - 1, books, library, false))
+        if (user.Borrow(id, books, library, false))
             Console.WriteLine("Tra sach thanh cong");
         else
             Console.WriteLine("Tra sach khong thanh cong");
@@ -201,7 +215,7 @@ public class Program
     }
     public static void UserInfo(ConsoleKeyInfo key)
     {
-        Console.WriteLine(user.GetInfo());
+        Console.WriteLine(user);
         Console.WriteLine("---------------------");
         Console.WriteLine("1. Cap nhat thong tin\nPhim bat ki. Thoat");
         key = Console.ReadKey(true);
@@ -215,7 +229,7 @@ public class Program
         while (key.Key != ConsoleKey.Escape)
         {
             Console.Clear();
-            Console.WriteLine(user.GetInfo());
+            Console.WriteLine(user);
             Console.WriteLine("---------------------");
             Console.WriteLine("1. Ho Ten\n2. Email\n3. Phone number\n4.Doi mat khau\n ESC. Thoat");
             key = Console.ReadKey(true);

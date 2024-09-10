@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,23 +45,27 @@ public class User
     {
         return new List<Book>(borrow.Keys);
     }
-    public bool Borrow(int position, List<Book> books, Library lib, bool state = true, byte sl = 1)
+    public bool Borrow(string id, List<Book> books, Library lib, bool state = true, byte sl = 1)
     {
-        if(position < 0 || position >= books.Count)
+        for (int i = 0; i < books.Count; i++)
         {
-            Console.WriteLine("Nhap khong hop le");
-            return false;
+            if(id == books[i].Id)
+            {
+                if (lib.Borrow(this, books[i], state, sl))
+                {
+                    if (!borrow.ContainsKey(books[i]))
+                        borrow[books[i]] = 0;
+                    borrow[books[i]] = state ? borrow[books[i]] + sl : borrow[books[i]] - sl;
+                    if (borrow[books[i]] <= 0)
+                        borrow.Remove(books[i]);
+                    return true;
+                }
+            }
         }
-        if (lib.Borrow(books[position], state, sl))
-        {     
-            if (!borrow.ContainsKey(books[position]))
-                borrow[books[position]] = 0;
-            borrow[books[position]] = state ? borrow[books[position]] + sl : borrow[books[position]] - sl;
-            return true;
-        }
+        Console.WriteLine("Id khong hop le");
         return false;
     }
-    public string GetInfo()
+    public override string ToString()
     {
         return $"TK: {user_name}\nMK: {password}\nHo Ten: {name}\nEmail: {email}\nPhone number: {phone_number}";
     }
@@ -118,7 +124,6 @@ public class User
         }
             
     }
-    
 }
 
 

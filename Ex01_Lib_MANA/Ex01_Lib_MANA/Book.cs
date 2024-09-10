@@ -13,6 +13,10 @@ public class Book : ICloneable
     private int numofpages;
     private uint price;
     private byte quantity;
+    public string Id { get => id; }
+
+    public byte Quantity { get => quantity; }
+
     public Book(string id, string title, string authorname,
         DateTime publisheddate, string publisher,
         int numofpages, uint price, byte quantity)
@@ -30,7 +34,7 @@ public class Book : ICloneable
     public object Clone()
     {
         return new Book(id, title, authorname, publisheddate,
-            publisher, numofpages, price, quantity);
+            publisher, numofpages, price, Quantity);
     }
 
     public bool find(string keyword)
@@ -50,31 +54,45 @@ public class Book : ICloneable
         this.price = price;
         this.quantity = quantity;
     }
-    public string getId()
+    public bool UpdateQuanntiy(byte sl = 1, bool state = true )
     {
-        return id;
-    }
-    public bool BorrowBook(byte sl = 1)
-    {
-        if(quantity > 0)
+        if (state)
         {
-            quantity -= sl;
-            return true;
+            if (sl > 0)
+            {
+                quantity += sl;
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
-    public bool ReturnBook(byte sl = 1)
-    {
-        if (sl > 0)
+        else
         {
-            quantity += sl;
-            return true;
-        }
-        return false;
+            if (quantity > 0)
+            {
+                quantity -= sl;
+                return true;
+            }
+            return false;       
+        }   
     }
 
     public override string ToString()
     {
-        return $"Id: {id}\nTitle: {title}\nAuthorname: {authorname}\nPublisheddate: {publisheddate}\nPublisher: {publisher}\nNumofpages: {numofpages}\nPrice: {price}\nQuantity: {quantity}";
+        return $"Id: {id}\nTitle: {title}\nAuthorname: {authorname}\nPublisheddate: {publisheddate}\nPublisher: {publisher}\nNumofpages: {numofpages}\nPrice: {price}\nQuantity: {Quantity}";
+    }
+
+    public static bool operator ==(Book book1, Book book2)
+    {
+        return book1.id == book2.id &&
+               book1.title == book2.title &&
+               book1.authorname == book2.authorname &&
+               book1.publisheddate == book2.publisheddate &&
+               book1.publisher == book2.publisher &&
+               book1.numofpages == book2.numofpages &&
+               book1.price == book2.price;
+    }
+    public static bool operator !=(Book book1, Book book2)
+    {
+        return !(book1 == book2);
     }
 }
