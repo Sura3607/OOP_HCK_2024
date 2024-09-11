@@ -18,11 +18,19 @@ public class Program
             Console.WriteLine("--------------------");         
         }    
     }
-    public static void PrintUser(List<User> users)
+    public static void PrintUsers(List<User> users)
     {
         foreach (User us in users)
         {
             Console.WriteLine(us);
+            Console.WriteLine("--------------------");
+        }
+    }
+    public static void PrintBookBorrow(List<string> bks)
+    {
+        foreach (string book in bks)
+        {
+            Console.WriteLine(book);
             Console.WriteLine("--------------------");
         }
     }
@@ -42,7 +50,7 @@ public class Program
         "NXB Phu Nu", 250, 200000, 7));
         library.addBook(new Book("B05", "Naruto",
         "Kishimoto Masashi", new DateTime(1999, 9, 1),
-        "NXB Phu Nu", 50, 250000, 10));
+        "NXB Kim Dong", 50, 250000, 10));
         library.addBook(new Book("B01", "Lap trinh HDT",
         "Nguyen Van At", new DateTime(2023, 12, 20),
         "NXB DHQG HN", 240, 210000, 23));
@@ -55,6 +63,15 @@ public class Program
         AddBooks();
 
         user = new User("Sura", "Nhut", "123");
+        //Find();
+        //library.Books[2].UpdatePrice(20000);
+        //Borrow();
+        //List<string> booksB = user.GetBorrowed();
+        //Console.WriteLine("Sach ban da muon");
+        //Console.WriteLine("----------------------------------------");
+        //PrintBookBorrow(booksB);
+        //Console.ReadLine();
+        //ReturnBook();
 
         userMenu();
 
@@ -75,6 +92,7 @@ public class Program
                 Console.Clear();
                 if (Login())
                 {
+                    Console.ReadLine();
                     Console.Clear();
                     LibaryMenu(key);
                 }
@@ -87,8 +105,7 @@ public class Program
                 Console.Clear();
                 SignUp();
                 Console.ReadLine();
-            }
-      
+            }  
         }
     }
     public static bool Login()
@@ -153,6 +170,7 @@ public class Program
     }
     public static void Borrow()
     {
+        Console.WriteLine("Muon Sach");
         Console.Write("Key Word: ");
         string s = Console.ReadLine();
         List<Book> books = user.Find(s, library);
@@ -168,18 +186,18 @@ public class Program
             Console.WriteLine("Muon sach thanh cong");
             Console.WriteLine("---------------------------------------------");
             Console.WriteLine("Danh sach nhunng tai khoan dang muon sach");
-            PrintUser(library.GetUserBarrowed());
+            PrintUsers(library.GetUserBarrowed());
         }
-
         else
             Console.WriteLine("Muon sach khong thanh cong");
     }
     public static void ReturnBook()
     {
-        List<Book> books = user.GetBorrowed();
+        List<Book> books = user.GetBorrowBook();
+        List<string> booksB = user.GetBorrowed();
         Console.WriteLine("Sach ban da muon");
         Console.WriteLine("----------------------------------------");
-        PrintBooks(books);
+        PrintBookBorrow(booksB);
         Console.WriteLine("----------------------------------------");
         Console.Write("Nhap id sach muon tra: ");
         string id = Console.ReadLine();
@@ -204,10 +222,10 @@ public class Program
             else if (key.Key == ConsoleKey.D2)
             {
                 Console.Clear();
-                List<Book> books = user.GetBorrowed();
+                List<string> booksB = user.GetBorrowed();
                 Console.WriteLine("Sach ban da muon");
                 Console.WriteLine("----------------------------------------");
-                PrintBooks(books);
+                PrintBookBorrow(booksB);
                 Console.ReadLine();
             }
         }
@@ -231,7 +249,7 @@ public class Program
             Console.Clear();
             Console.WriteLine(user);
             Console.WriteLine("---------------------");
-            Console.WriteLine("1. Ho Ten\n2. Email\n3. Phone number\n4.Doi mat khau\n ESC. Thoat");
+            Console.WriteLine("1. Ho Ten\n2. Email\n3. Phone number\n4.Doi mat khau\nESC. Thoat");
             key = Console.ReadKey(true);
             if (key.Key == ConsoleKey.D1)
             {

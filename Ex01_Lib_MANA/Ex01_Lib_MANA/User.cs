@@ -41,9 +41,19 @@ public class User
     {
         return lib.find(keyword);
     }
-    public List<Book> GetBorrowed()
+    public List<Book> GetBorrowBook()
     {
         return new List<Book>(borrow.Keys);
+    }
+    public List<string> GetBorrowed()
+    {
+        List<Book> b = new List<Book>(borrow.Keys);
+        List<string> ret = new List<string>();
+        foreach(Book book in b)
+        {
+            ret.Add($"Id: {book.Id}\nTitle: {book.Title}\nSo luong: {borrow[book]}");
+        }
+        return ret;
     }
     public bool Borrow(string id, List<Book> books, Library lib, bool state = true, byte sl = 1)
     {

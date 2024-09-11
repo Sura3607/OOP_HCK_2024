@@ -16,6 +16,7 @@ public class Book : ICloneable
     public string Id { get => id; }
 
     public byte Quantity { get => quantity; }
+    public string Title { get => title; }
 
     public Book(string id, string title, string authorname,
         DateTime publisheddate, string publisher,
@@ -33,13 +34,13 @@ public class Book : ICloneable
 
     public object Clone()
     {
-        return new Book(id, title, authorname, publisheddate,
+        return new Book(id, Title, authorname, publisheddate,
             publisher, numofpages, price, Quantity);
     }
 
     public bool find(string keyword)
     {
-        return title.IndexOf(keyword) >= 0 ||
+        return Title.IndexOf(keyword) >= 0 ||
             authorname.IndexOf(keyword) >= 0;
     }
     public void update(string title, string authorname,
@@ -53,6 +54,10 @@ public class Book : ICloneable
         this.numofpages = numofpages;
         this.price = price;
         this.quantity = quantity;
+    }
+    public void UpdatePrice(uint price)
+    {
+        this.price = price;
     }
     public bool UpdateQuanntiy(byte sl = 1, bool state = true )
     {
@@ -78,13 +83,13 @@ public class Book : ICloneable
 
     public override string ToString()
     {
-        return $"Id: {id}\nTitle: {title}\nAuthorname: {authorname}\nPublisheddate: {publisheddate}\nPublisher: {publisher}\nNumofpages: {numofpages}\nPrice: {price}\nQuantity: {Quantity}";
+        return $"Id: {id}\nTitle: {Title}\nAuthorname: {authorname}\nPublisheddate: {publisheddate}\nPublisher: {publisher}\nNumofpages: {numofpages}\nPrice: {price}\nQuantity: {Quantity}";
     }
 
     public static bool operator ==(Book book1, Book book2)
     {
         return book1.id == book2.id &&
-               book1.title == book2.title &&
+               book1.Title == book2.Title &&
                book1.authorname == book2.authorname &&
                book1.publisheddate == book2.publisheddate &&
                book1.publisher == book2.publisher &&

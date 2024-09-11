@@ -37,12 +37,12 @@ public class Library
                 user_borrows[user] = 1;
             else
                 user_borrows[user]++;
-            return book.UpdateQuanntiy(sl);
+            return book.UpdateQuanntiy(sl,false);
         }
         user_borrows[user]--;
         if(user_borrows[user] <= 0)
             user_borrows.Remove(user);
-        return book.UpdateQuanntiy(sl,false);
+        return book.UpdateQuanntiy(sl);
     }
     public List<User> GetUserBarrowed()
     {
