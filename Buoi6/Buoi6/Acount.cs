@@ -37,6 +37,7 @@ namespace Buoi6
         }
         public bool Withdraw(decimal amount, string pin)
         {
+
             if (Pin == pin && amount <= Balance)
             {
                 Balance -= amount;
@@ -46,6 +47,7 @@ namespace Buoi6
             }
             else
             {
+                Console.WriteLine("Số dư không đủ");
                 return false;
             }
         }
@@ -61,6 +63,7 @@ namespace Buoi6
             }
             else
             {
+                Console.WriteLine("Số dư không đủ");
                 return false;
             }
         }

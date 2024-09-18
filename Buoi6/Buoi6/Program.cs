@@ -21,6 +21,7 @@ namespace Buoi6
             ATM atm = new ATM();
             atm.AddAccount(acc1);
             atm.AddAccount(acc2);
+
             MenuLogin(atm);
 
             //atm.Login("31231022655", "Khoa@123");
