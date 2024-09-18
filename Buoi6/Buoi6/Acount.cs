@@ -40,7 +40,7 @@ namespace Buoi6
             if (Pin == pin && amount <= Balance)
             {
                 Balance -= amount;
-                string message = $"Rút tiền: {amount}. Số dư còn lại: {Balance}.";
+                string message = $"Rút tiền: {amount:C}. Số dư còn lại: {Balance:C}.";
                 OnTransaction?.Invoke(message);
                 return true;
             }
@@ -55,7 +55,7 @@ namespace Buoi6
             {
                 Balance -= amount;
                 destinationAccount.Balance += amount;
-                string message = $"Chuyển tiền: {amount} đến tài khoản {destinationAccount.AccountNumber}. Số dư còn lại: {Balance}.";
+                string message = $"Chuyển tiền: {amount:C} đến tài khoản {destinationAccount.AccountNumber}. Số dư còn lại: {Balance:C}.";
                 OnTransaction?.Invoke(message);
                 return true;
             }

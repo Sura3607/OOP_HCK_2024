@@ -15,13 +15,12 @@ namespace Buoi6
             User user1 = new User("Nhut", "Nhut@gmail.com", "0911943607", "Nhut@123");
             User user2 = new User("Khoa", "Khoa@gmail.com", "0911943607", "Khoa@123");
 
-            Account acc1 = new Account(user1,"31231022656" ,"111111", 2000m);
-            Account acc2 = new Account(user2, "31231022655", "111222", 1000m);
+            Account acc1 = new Account(user1,"31231022656" ,"111111", 20000);
+            Account acc2 = new Account(user2, "31231022655", "111222", 10000);
 
             ATM atm = new ATM();
             atm.AddAccount(acc1);
             atm.AddAccount(acc2);
-
             MenuLogin(atm);
 
             //atm.Login("31231022655", "Khoa@123");
@@ -113,7 +112,7 @@ namespace Buoi6
                         break;
                     case ConsoleKey.D3:
                         Console.Clear();
-                        Console.WriteLine($"Số dư hiện tại: {atm.CheckBalance()}");
+                        Console.WriteLine($"Số dư hiện tại: {atm.CheckBalance():C}");
                         Console.ReadLine();
                         break;
                     case ConsoleKey.D4:

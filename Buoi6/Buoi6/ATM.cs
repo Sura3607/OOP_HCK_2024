@@ -26,6 +26,7 @@ namespace Buoi6
             {
                 currentAccount = account;
                 Console.WriteLine("Đăng nhập thành công.");
+                Console.WriteLine($"Số dư của {account.User.Name} là {account.Balance:C}");
                 return true;
             }
             else
