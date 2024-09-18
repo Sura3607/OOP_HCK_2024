@@ -69,6 +69,7 @@ namespace Buoi6
             return !string.IsNullOrEmpty(pin) &&
                    pin.Length == 6 &&
                    Regex.IsMatch(pin, @"^\d{6}$");
+            //@"^\d{6}$" Biểu thức chính quy. ^ là bắt đầu chuỗi, \d Kí tự (0-9), {6} số kí tự là 6, $ kết thúc chuỗi
         }
         public bool IsValidPin(string pin)
         {
