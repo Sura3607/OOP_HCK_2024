@@ -10,21 +10,19 @@ namespace HarvestFarm
     {
         public float Cost { get; private set; }
         public float Value { get; private set; }
-        public DateTime Start {  get; private set; }
-        public DateTime Duration {  get; private set; }
+        public DateTime Start {  get; internal set; }
+        public DateTime Duration {  get; internal set; }
         public float Fetilizer { get; private set; }
         public float Water {  get; private set; }
-        public Product(float cost, float value, int durationSeconds, float fetilizer, float water)
+        public Product(float cost, float value, float fetilizer, float water)
         {
             Cost = cost;
             Value = value;
-            Start = DateTime.Now;
-            Duration = Start.AddSeconds(durationSeconds);
             Fetilizer = fetilizer;
             Water = water;
         }
         public abstract void seed();
-        public abstract int harvest();
+        public abstract float harvest();
 
     }
 }

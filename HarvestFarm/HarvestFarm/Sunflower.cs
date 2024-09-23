@@ -10,27 +10,44 @@ namespace HarvestFarm
     {
         public int Num_fetilizer { get; private set; }
         public int Num_water { get; private set; }
-        public Sunflower(float cost, float value, float fetilizer, float water)
-                    : base(cost, value, 15, fetilizer, water)
+        public Sunflower(): base(20, 25, 1, 1)
         {
-            Num_fetilizer = 0;
-            Num_water = 0;
+            Num_fetilizer = 2;
+            Num_water = 1;
         }
         public void feed()
         {
-            Num_fetilizer++;
+            if (Num_fetilizer <= 0)
+            {
+                string message = "Đã bón đủ phân.";
+                throw new Exception(message);
+            }
+            Num_fetilizer--;
         }
         public void prov_water()
         {
-            Num_water++;
+            if (Num_water <= 0)
+            {
+                string message = "Đã tưới đủ nước.";
+                throw new Exception(message);
+            }
+            Num_water--;
         }
-        public override int harvest()
+        public bool CanHarvest()
         {
-            return 0;
+            if(Num_fetilizer == 0 && Num_water == 0)
+                return true;
+            return false;
+        }
+        public override float harvest()
+        {
+            return Value;
         }
         public override void seed()
         {
-           
+            Start = DateTime.Now;
+            Duration = Start.AddSeconds(40);
+            Console.WriteLine("Đã trồng thành công Sunflower.");
         }
     }
 }

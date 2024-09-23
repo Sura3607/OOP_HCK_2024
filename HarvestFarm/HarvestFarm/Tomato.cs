@@ -10,28 +10,45 @@ namespace HarvestFarm
     {
         public int Num_fetilizer { get; private set; }
         public int Num_water { get; private set; }
-        public Tomato(float cost, float value, float fetilizer, float water)
-                    : base(cost, value, 10, fetilizer, water)
+        public Tomato(): base(10, 20, 0.2f, 0.5f)
         {
-            Num_fetilizer = 0;
-            Num_water = 0;
+            Num_fetilizer = 1;
+            Num_water = 1;
         }
-        public bool feed()
+        public void feed()
         {
-            return true;
+            if (Num_fetilizer <= 0)
+            {
+                string message = "Đã bón đủ phân.";
+                throw new Exception(message);
+            }
+            Num_fetilizer--;
         }
-        public bool prov_water()
+        public void prov_water()
         {
-            return true;
+            if (Num_water <= 0)
+            {
+                string message = "Đã tưới đủ nước.";
+                throw new Exception(message);
+            }
+            Num_water--;
         }
-        public override int harvest()
+        public bool CanHarvest()
         {
-            return 0;
+            if (Num_fetilizer == 0 && Num_water == 0)
+                return true;
+            return false;
+        }
+        public override float harvest()
+        {
+            return Value;
         }
 
         public override void seed()
         {
-            
+            Start = DateTime.Now;
+            Duration = Start.AddSeconds(15);
+            Console.WriteLine("Đã trồng thành công Tomato.");
         }
     }
 }
