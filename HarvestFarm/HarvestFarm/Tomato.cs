@@ -35,9 +35,7 @@ namespace HarvestFarm
         }
         public bool CanHarvest()
         {
-            if (Num_fetilizer == 0 && Num_water == 0)
-                return true;
-            return false;
+            return Num_fetilizer == 0 && Num_water == 0 && DateTime.Now >= Duration;
         }
         public override float harvest()
         {

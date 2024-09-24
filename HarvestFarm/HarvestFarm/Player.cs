@@ -19,17 +19,17 @@ namespace HarvestFarm
             Reward = 50;
             Inventory = new Dictionary<Product, int>();
             State = new FarmState();
-            State.Update();
         }
         public void Buy(Product product, int sl)
         {
-            if (Reward < product.Cost)
+            float cost = product.Cost*sl;
+            if (Reward < cost)
             {
                 string message = "Không đủ tiền.";
                 throw new Exception(message);
             }
-            Reward -= product.Cost;
-            if (Inventory.ContainsKey(product))         
+            Reward -= cost;
+            if (Inventory.ContainsKey(product))       
                 Inventory[product] += sl;            
             else            
                 Inventory[product] = sl;            
@@ -48,7 +48,7 @@ namespace HarvestFarm
                 ((Tomato)product).feed();
             else
                 ((Wheat)product).feed();
-            State.UpdateCell(x, y, product);
+            State.UpdateCell(x, product);
         }
         public void Prov_water(Product product, int x, int y)
         {
@@ -64,11 +64,11 @@ namespace HarvestFarm
                 ((Tomato)product).prov_water();
             else
                 ((Wheat)product).prov_water();
-            State.UpdateCell(x, y, product);
+            State.UpdateCell(x, product);
         }
         public void Seed(Product product, int x, int y)
         {
-            if(!State.CanSeed(x, y))
+            if(!State.CanSeed(x))
             {
                 string message = "Ô này hiện đang có cây.";
                 throw new Exception(message);
@@ -80,10 +80,23 @@ namespace HarvestFarm
             else
                 ((Wheat)product).seed();
             Inventory[product]--;
-            State.UpdateCell(x, y, product);
+            State.UpdateCell(x, product);
         }
-        public void Harvest(Product product)
+        public bool CanHavest(Product product)
         {
+            if (product.GetType() == typeof(Sunflower))
+                return ((Sunflower)product).CanHarvest();
+            else if (product.GetType() == typeof(Tomato))
+                return ((Tomato)product).CanHarvest();
+            else
+                return ((Wheat)product).CanHarvest();
+        }
+        public void Harvest(Product product, int x)
+        {
+            if (!CanHavest(product))
+            {
+                throw new Exception("Không đủ điều kiện thu hoạch.");
+            }
             float profit = 0;
             if(product.GetType() == typeof(Sunflower))
                 profit += ((Sunflower)product).harvest();
@@ -92,7 +105,24 @@ namespace HarvestFarm
             else
                 profit += ((Wheat)product).harvest();
             Reward += profit;
+            State.UpdateCell(x, null);
             Console.WriteLine($"Lợi nhuận thu hoạch: {profit}, Điểm thưởng hiện tại: {Reward}");
+        }
+        public void PrintInventory()
+        {
+            if (Inventory.Count == 0)
+            {
+                Console.WriteLine("Kho hiện không có sản phẩm nào.");
+                return;
+            }
+            Console.WriteLine("{0,-20} {1,-10}", "Tên sản phẩm", "Số lượng");
+            Console.WriteLine(new string('-', 30));
+            foreach (var item in Inventory)
+            {
+                string productName = item.Key.GetType().Name;
+                int quantity = item.Value;
+                Console.WriteLine("{0,-20} {1,-10}", productName, quantity);
+            }
         }
     }
 }

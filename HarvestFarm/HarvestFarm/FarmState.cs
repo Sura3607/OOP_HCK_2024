@@ -8,23 +8,22 @@ namespace HarvestFarm
 {
     public class FarmState
     {
-        private Product currentProduct;
         private Grid Grid = new Grid();
-        public Product GetPlan(int x, int y)
+        public Product GetPlan(int x)
         {
-            return Grid.GetCell(x, y);
+            return Grid.GetCell(x);
         }
-        public bool CanSeed(int x, int y)
+        public bool CanSeed(int x)
         {
-            return Grid.IsCellEmpty(x, y);
+            return Grid.IsCellEmpty(x);
         }
         public void Update()
         {
             Grid.PrintGrid();
         }
-        public void UpdateCell(int x, int y, Product product)
+        public void UpdateCell(int x, Product product)
         {
-            Grid.SetCell(x, y, product);
+            Grid.SetCell(x, product);
         }
     }
 }
