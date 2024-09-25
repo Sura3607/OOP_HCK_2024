@@ -80,6 +80,8 @@ namespace HarvestFarm
             else
                 ((Wheat)product).seed();
             Inventory[product]--;
+            if(Inventory[product] == 0)
+                Inventory.Remove(product);
             State.UpdateCell(x, product);
         }
         public bool CanHavest(Product product)

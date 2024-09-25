@@ -38,7 +38,7 @@ namespace HarvestFarm
                 Console.ResetColor();
                 Console.WriteLine("+-------------------------------------+");
                 Console.WriteLine("| 1. Mua hạt giống                    |");
-                Console.WriteLine("| 2. Trồng hạt giống                  |");
+                Console.WriteLine("| 2. Gieo hạt                         |");
                 Console.WriteLine("| 3. Bón phân                         |");
                 Console.WriteLine("| 4. Tưới nước                        |");
                 Console.WriteLine("| 5. Thu hoạch                        |");
