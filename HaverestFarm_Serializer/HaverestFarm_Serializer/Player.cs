@@ -44,12 +44,20 @@ namespace HarvestFarm_Serializer
                 
                 byte[] data = memoryStream.ToArray();
 
-                // Ghi mảng byte vào file nhị phân
-                using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create)))
-                {
-                    writer.Write(data.Length);  
-                    writer.Write(data);         
+                StringBuilder binaryString = new StringBuilder();
+                foreach (byte b in data)
+                {                   
+                    binaryString.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
                 }
+                using (StreamWriter writer = new StreamWriter(filePath, false))
+                {
+                    writer.Write(binaryString.ToString());
+                }
+                //using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create)))
+                //{
+                //    writer.Write(data.Length);  
+                //    writer.Write(data);         
+                //}
 
                 Console.WriteLine("Đã lưu thành công!");
             }
@@ -60,19 +68,31 @@ namespace HarvestFarm_Serializer
             DataContractSerializer serializer = new DataContractSerializer(typeof(Player));
             if (System.IO.File.Exists(filePath))
             {
-                using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+                //using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+                //{
+                //    int dataLength = reader.ReadInt32();
+                //    byte[] data = reader.ReadBytes(dataLength);
+
+                //    using (MemoryStream memoryStream = new MemoryStream(data))
+                //    {
+
+                //        return (Player)serializer.ReadObject(memoryStream);
+                //    }
+                //}
+                string binaryString;
+                using (StreamReader reader = new StreamReader(filePath))
                 {
-                    
-                    int dataLength = reader.ReadInt32();
-
-                    
-                    byte[] data = reader.ReadBytes(dataLength);
-
-                    using (MemoryStream memoryStream = new MemoryStream(data))
-                    {
-                        
-                        return (Player)serializer.ReadObject(memoryStream);
-                    }
+                    binaryString = reader.ReadToEnd();
+                }
+                int byteCount = binaryString.Length / 8; 
+                byte[] data = new byte[byteCount];
+                for (int i = 0; i < byteCount; i++)
+                {
+                    data[i] = Convert.ToByte(binaryString.Substring(i * 8, 8), 2);
+                }
+                using (MemoryStream memoryStream = new MemoryStream(data))
+                {
+                    return (Player)serializer.ReadObject(memoryStream);
                 }
             }
             else
