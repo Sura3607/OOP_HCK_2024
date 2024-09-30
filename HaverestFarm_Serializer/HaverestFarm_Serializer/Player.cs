@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Xml;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace HarvestFarm_Serializer
 {
+    [Serializable]
     [DataContract]
     [KnownType(typeof(Grid))]
     [KnownType(typeof(FarmState))]
@@ -17,7 +19,7 @@ namespace HarvestFarm_Serializer
     [KnownType(typeof(Sunflower))]
     [KnownType(typeof(Wheat))]
     [KnownType(typeof(Tomato))]
-    public class Player
+    public class Player : ISerializable
     {
         [DataMember]
         public string Name { get; private set; }
@@ -34,67 +36,84 @@ namespace HarvestFarm_Serializer
             Inventory = new Dictionary<Product, int>();
             State = new FarmState();
         }
+
         public void Save(string filePath)
         {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Player));
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-               
-                serializer.WriteObject(memoryStream, this);
-                
-                byte[] data = memoryStream.ToArray();
+            BinaryFormatter formatter = new BinaryFormatter();
 
-                StringBuilder binaryString = new StringBuilder();
-                foreach (byte b in data)
-                {                   
-                    binaryString.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
-                }
-                using (StreamWriter writer = new StreamWriter(filePath, false))
-                {
-                    writer.Write(binaryString.ToString());
-                }
-                //using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create)))
-                //{
-                //    writer.Write(data.Length);  
-                //    writer.Write(data);         
-                //}
+            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                formatter.Serialize(fileStream, this);
 
                 Console.WriteLine("Đã lưu thành công!");
             }
+            //DataContractSerializer serializer = new DataContractSerializer(typeof(Player));
+            //using (MemoryStream memoryStream = new MemoryStream())
+            //{    
+
+            //    serializer.WriteObject(memoryStream, this);
+
+            //    byte[] data = memoryStream.ToArray();
+            //    using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create)))
+            //    {
+            //        writer.Write(data.Length);
+            //        writer.Write(data);
+            //    }
+
+            //    //StringBuilder binaryString = new StringBuilder();
+            //    //foreach (byte b in data)
+            //    //{
+            //    //    binaryString.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
+            //    //}
+            //    //using (StreamWriter writer = new StreamWriter(filePath, false))
+            //    //{
+            //    //    writer.Write(binaryString.ToString());
+            //    //}
+
+            //    Console.WriteLine("Đã lưu thành công!");
+            //}
         }
         public static Player Load(string filePath)
         {
-            
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Player));
-            if (System.IO.File.Exists(filePath))
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            if (File.Exists(filePath))
             {
-                //using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
-                //{
-                //    int dataLength = reader.ReadInt32();
-                //    byte[] data = reader.ReadBytes(dataLength);
-
-                //    using (MemoryStream memoryStream = new MemoryStream(data))
-                //    {
-
-                //        return (Player)serializer.ReadObject(memoryStream);
-                //    }
-                //}
-                string binaryString;
-                using (StreamReader reader = new StreamReader(filePath))
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
                 {
-                    binaryString = reader.ReadToEnd();
-                }
-                int byteCount = binaryString.Length / 8; 
-                byte[] data = new byte[byteCount];
-                for (int i = 0; i < byteCount; i++)
-                {
-                    data[i] = Convert.ToByte(binaryString.Substring(i * 8, 8), 2);
-                }
-                using (MemoryStream memoryStream = new MemoryStream(data))
-                {
-                    return (Player)serializer.ReadObject(memoryStream);
+                    return (Player)formatter.Deserialize(fileStream);
                 }
             }
+            //DataContractSerializer serializer = new DataContractSerializer(typeof(Player));
+            //if (System.IO.File.Exists(filePath))
+            //{
+            //    using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+            //    {
+            //        int dataLength = reader.ReadInt32();
+            //        byte[] data = reader.ReadBytes(dataLength);
+
+            //        using (MemoryStream memoryStream = new MemoryStream(data))
+            //        {
+
+            //            return (Player)serializer.ReadObject(memoryStream);
+            //        }
+            //    }
+            //    //string binaryString;
+            //    //using (StreamReader reader = new StreamReader(filePath))
+            //    //{
+            //    //    binaryString = reader.ReadToEnd();
+            //    //}
+            //    //int byteCount = binaryString.Length / 8;
+            //    //byte[] data = new byte[byteCount];
+            //    //for (int i = 0; i < byteCount; i++)
+            //    //{
+            //    //    data[i] = Convert.ToByte(binaryString.Substring(i * 8, 8), 2);
+            //    //}
+            //    //using (MemoryStream memoryStream = new MemoryStream(data))
+            //    //{
+            //    //    return (Player)serializer.ReadObject(memoryStream);
+            //    //}
+            //}
             else
             {
                 throw new Exception("Chưa tồn lại.");
@@ -205,6 +224,21 @@ namespace HarvestFarm_Serializer
                 int quantity = item.Value;
                 Console.WriteLine("{0,-20} {1,-10}", productName, quantity);
             }
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name", Name);
+            info.AddValue("Reward", Reward);
+            info.AddValue("State", State);
+            info.AddValue("Inventory", Inventory);
+        }
+        public Player(SerializationInfo info, StreamingContext context)
+        {
+            Name = info.GetString("Name");
+            Reward = (float)info.GetInt32("Reward");
+            State = (FarmState)info.GetValue("State",typeof(FarmState));
+            Inventory = (Dictionary<Product,int>)info.GetValue("Inventory", typeof(Dictionary<Product, int>));
         }
     }
 }

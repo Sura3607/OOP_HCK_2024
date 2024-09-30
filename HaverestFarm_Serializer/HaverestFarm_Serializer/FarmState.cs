@@ -7,8 +7,9 @@ using System.Runtime.Serialization;
 
 namespace HarvestFarm_Serializer
 {
+    [Serializable]
     [DataContract]
-    public class FarmState
+    public class FarmState : ISerializable
     {
         [DataMember]
         private Grid Grid = new Grid();
@@ -27,6 +28,16 @@ namespace HarvestFarm_Serializer
         public void UpdateCell(int x, Product product)
         {
             Grid.SetCell(x, product);
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Grid", Grid);
+        }
+        public FarmState() { }
+        public FarmState(SerializationInfo info, StreamingContext context)
+        {
+            Grid = (Grid)info.GetValue("Grid", typeof(Grid));
         }
     }
 }

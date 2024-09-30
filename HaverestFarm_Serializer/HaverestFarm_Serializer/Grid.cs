@@ -9,7 +9,8 @@ using System.Runtime.Serialization;
 namespace HarvestFarm_Serializer
 {
     [DataContract]
-    public class Grid
+    [Serializable]
+    public class Grid : ISerializable
     {
         [DataMember]
         private ArrayList grid;
@@ -120,6 +121,15 @@ namespace HarvestFarm_Serializer
                 return ConsoleColor.Blue;
             else
                 return ConsoleColor.Red;
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("grid", grid);
+        }
+        public Grid(SerializationInfo info, StreamingContext context)
+        {
+            grid = (ArrayList)info.GetValue("grid", typeof(ArrayList));
         }
     }
 }

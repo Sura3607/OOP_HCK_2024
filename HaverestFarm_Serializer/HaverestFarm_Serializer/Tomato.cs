@@ -8,7 +8,8 @@ using System.Runtime.Serialization;
 namespace HarvestFarm_Serializer
 {
     [DataContract]
-    public class Tomato : Product
+    [Serializable]
+    public class Tomato : Product,ISerializable
     {
         [DataMember]
         public int Num_fetilizer { get; private set; }
@@ -18,6 +19,19 @@ namespace HarvestFarm_Serializer
         {
             Num_fetilizer = 1;
             Num_water = 1;
+        }
+        public Tomato(SerializationInfo info, StreamingContext context)
+            : base(10, 20, 0.2f, 0.5f, info, context)
+        {
+            Num_fetilizer = info.GetInt32("Num_fetilizer");
+            Num_water = info.GetInt32("Num_water");
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Num_fetilizer", Num_fetilizer);
+            info.AddValue("Num_water", Num_water);
         }
         public void feed()
         {

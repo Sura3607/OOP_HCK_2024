@@ -14,22 +14,36 @@ namespace Buoi10
     {
         static void Main(string[] args)
         {
-            //StudentList studentList = new StudentList();
-            //studentList.Add(new Student { Id = 1, Name = "Nam", Age = 20 });
-            //studentList.Add(new Student { Id = 2, Name = "Binh", Age = 21 });
-            //studentList.Add(new Student { Id = 3, Name = "Minh", Age = 22 });
+            //Bai1();
 
-            //string json = JsonSerializer.Serialize(studentList, new JsonSerializerOptions { WriteIndented = true });
+            string filePath = "data.dat";
+            string finalJson = File.ReadAllText(filePath);
+            StudentList finalStudentList = JsonSerializer.Deserialize<StudentList>(finalJson);
+            Console.WriteLine("\nStudents List:");
+            foreach (Student student in finalStudentList.Students)
+            {
+                Console.WriteLine(student);
+            }
 
-            //StudentList deserializerStudentList = JsonSerializer.Deserialize<StudentList>(json);
+            //Bai2();
 
-            //Console.WriteLine("\nDeserializer Students");
-            //foreach (Student student in deserializerStudentList.Students)
+            //string filePath = "data.xml";
+            //string finalXml;
+            //using (StreamReader reader = new StreamReader(filePath))
+            //{
+            //    finalXml = reader.ReadToEnd();
+            //}
+            //StudentList finalStudentList;
+            //using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            //{
+            //    finalStudentList = (StudentList)xmlSerializer.Deserialize(fs);
+            //}
+
+            //Console.WriteLine("\nStudents List:");
+            //foreach (Student student in finalStudentList.Students)
             //{
             //    Console.WriteLine(student);
             //}
-            //Bai1();
-            Bai2();
 
             Console.ReadLine();
         }
@@ -55,23 +69,23 @@ namespace Buoi10
                 Console.WriteLine(student);
             }
 
-            //them vai sv de add vao file
-            newstudentlist.Add(new Student { Id = 4, Name = "An", Age = 23 });
-            newstudentlist.Add(new Student { Id = 5, Name = "Thuy", Age = 24 });
+            ////them vai sv de add vao file
+            //newstudentlist.Add(new Student { Id = 4, Name = "An", Age = 23 });
+            //newstudentlist.Add(new Student { Id = 5, Name = "Thuy", Age = 24 });
 
-            //them du lieu moi
-            string updatedJson = JsonSerializer.Serialize(newstudentlist, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, updatedJson);
-            Console.WriteLine("\nDa them du lieu moi vao data.dat.");
+            ////them du lieu moi
+            //string updatedJson = JsonSerializer.Serialize(newstudentlist, new JsonSerializerOptions { WriteIndented = true });
+            //File.WriteAllText(filePath, updatedJson);
+            //Console.WriteLine("\nDa them du lieu moi vao data.dat.");
 
-            //deserializer
-            string finalJson = File.ReadAllText(filePath);
-            StudentList finalStudentList = JsonSerializer.Deserialize<StudentList>(finalJson);
-            Console.WriteLine("\nStudents List:");
-            foreach (Student student in finalStudentList.Students)
-            {
-                Console.WriteLine(student);
-            }
+            ////deserializer
+            //string finalJson = File.ReadAllText(filePath);
+            //StudentList finalStudentList = JsonSerializer.Deserialize<StudentList>(finalJson);
+            //Console.WriteLine("\nStudents List:");
+            //foreach (Student student in finalStudentList.Students)
+            //{
+            //    Console.WriteLine(student);
+            //}
         }
         public static void Bai2()
         {
@@ -107,34 +121,34 @@ namespace Buoi10
                 Console.WriteLine(student);
             }
 
-            //them vai sv de add vao file
-            newstudentlist.Add(new Student { Id = 4, Name = "An", Age = 23 });
-            newstudentlist.Add(new Student { Id = 5, Name = "Thuy", Age = 24 });
+            ////them vai sv de add vao file
+            //newstudentlist.Add(new Student { Id = 4, Name = "An", Age = 23 });
+            //newstudentlist.Add(new Student { Id = 5, Name = "Thuy", Age = 24 });
 
-            //them du lieu moi
-            using (FileStream fs = new FileStream(filePath, FileMode.Create))
-            {
-                xmlSerializer.Serialize(fs, newstudentlist);
-            }
-            Console.WriteLine("\nDa them du lieu moi vao data.xml.");
+            ////them du lieu moi
+            //using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            //{
+            //    xmlSerializer.Serialize(fs, newstudentlist);
+            //}
+            //Console.WriteLine("\nDa them du lieu moi vao data.xml.");
 
-            //deserializer
-            string finalXml;
-            using (StreamReader reader = new StreamReader(filePath))
-            {
-                finalXml = reader.ReadToEnd();
-            }
-            StudentList finalStudentList;
-            using (FileStream fs = new FileStream(filePath, FileMode.Open))
-            {
-                finalStudentList = (StudentList)xmlSerializer.Deserialize(fs);
-            }
+            ////deserializer
+            //string finalXml;
+            //using (StreamReader reader = new StreamReader(filePath))
+            //{
+            //    finalXml = reader.ReadToEnd();
+            //}
+            //StudentList finalStudentList;
+            //using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            //{
+            //    finalStudentList = (StudentList)xmlSerializer.Deserialize(fs);
+            //}
 
-            Console.WriteLine("\nStudents List:");
-            foreach (Student student in finalStudentList.Students)
-            {
-                Console.WriteLine(student);
-            }
+            //Console.WriteLine("\nStudents List:");
+            //foreach (Student student in finalStudentList.Students)
+            //{
+            //    Console.WriteLine(student);
+            //}
         }
     }
 }
